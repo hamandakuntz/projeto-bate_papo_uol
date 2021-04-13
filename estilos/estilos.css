@@ -1,0 +1,234 @@
+body {
+    font-family: 'Roboto';
+}
+
+.entrada {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tela-inicial {
+    width: 130px;
+    height: 92px;
+    margin-top: 150px;    
+}
+
+.inputentrada {
+    width: 260px;
+    height: 54px;
+    margin-top: 90px;
+    outline: 0; 
+    font-size: 18px;    
+    font-family: 'Roboto';
+    border: 1px solid #D7D7D7;
+    border-radius: 4px;
+}
+
+
+#placeholder-text-entrada::placeholder{       
+    color: #AEAEAE;
+    font-weight: 400;
+    font-size: 18px;
+    text-align: center;
+}
+
+button {
+    font-size: 18px;
+    background-color: #E7E7E7;
+    color: #696969;
+    border-radius: 9px;
+    border: 0;    
+    width: 109px;
+    height: 45px;
+    margin-top: 20px;
+}
+
+
+.topo {
+    width: 100%;
+    height: 80px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;    
+}
+
+.icones {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+ion-icon {
+    font-size: 50px;    
+}
+
+img {
+    width: 75px;
+    height: 53px;
+}
+
+.bate-papo {
+    background: #E5E5E5;
+    width: 100%;
+    font-size: 14px;
+}
+
+.mensagem-ações {
+    height: 40px;   
+    padding-left: 5px;  
+    padding-top: 15px;      
+    background-color: #DCDCDC;
+    margin-bottom: 5px;   
+    border-radius: 2px;
+}
+
+.mensagem-publica {
+    height: 40px;
+    padding-top: 15px;      
+    padding-left: 5px;    
+    margin-bottom: 5px;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+}
+
+.mensagem-privada {
+    height: 40px;
+    padding-top: 5px;      
+    padding-left: 5px;
+    padding-bottom: 10px;
+    background-color: #FFDEDE;
+    margin-bottom: 5px;  
+    border-radius: 2px;  
+}
+
+.base {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+}
+
+.base1 {
+    width: 100%;
+    height: 60px;
+    font-size: 18px;
+    background: #FFFFFF;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0px -4px 6px rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+}
+
+.base2 {   
+    background: #FFFFFF; 
+    padding-left: 15px;
+    padding-bottom: 10px;   
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.paper-plane-outline {
+    font-size: 25px;
+}
+
+.inputbase {
+    outline: 0; 
+    font-size: 18px;    
+    font-family: 'Roboto';
+    color: black;
+    width: 145px;
+    height: 30px;
+    border: 0;
+}
+
+#placeholder-text-base::placeholder{
+    font-style: italic;    
+    color: black;
+    font-weight: 400;
+}
+
+.escondido {
+    display: none;
+}
+
+.participantes-ativos {
+    width: 259px;
+    height: 100%;
+    background-color: #FFFFFF;    
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.fundo {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.topo-sidebar {
+    width: 259px;
+    height: 84px;
+    font-weight: bold;    
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    text-align: center; 
+    font-size: 16px;
+}
+
+.contato, .visibilidade {
+    display: flex;
+    align-items: center;
+    margin: 10px;   
+    position: relative;    
+}
+
+.contato span {
+    padding-left: 10px;
+}
+
+.visibilidade span {
+    padding-left: 10px;
+}
+
+.ion-icon-sidebar {
+    font-size: 35px;
+}
+
+.ion-icon-sidebar-check {
+    font-size: 20px;
+    color: #28BB25;
+    font-weight: bolder; 
+    position: absolute;    
+    top: 5;
+    right: 0;  
+}
+
+.meio-sidebar {
+    width: 259px;
+    height: 64px;
+    font-weight: bold;    
+    display: flex;
+    align-items: center;
+    justify-content: center;  
+    text-align: center; 
+    font-size: 16px;
+}
