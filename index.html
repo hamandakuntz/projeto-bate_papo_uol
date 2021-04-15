@@ -22,23 +22,23 @@
      <div class="topo">
          <div class="icones">
          <img src="imagens/logo.png" alt="logo-uol">
-         <ion-icon name="people"></ion-icon>
+         <ion-icon name="people" onclick="exibeUsuários()"></ion-icon>
         </div>
      </div>   
     
      <div class="bate-papo">
-         <div class="mensagem-ações">(09:21:45)  <strong>João</strong>  entra na sala...</div>
+         <!-- <div class="mensagem-ações">(09:21:45)  <strong>João</strong>  entra na sala...</div>
          <div class="mensagem-publica">(09:22:28)  <strong>João</strong> para Todos:  Bom dia</div>
          <div class="mensagem-publica">(09:22:38)  <strong>Maria</strong> para <strong>João</strong>:  Oi João :)</div>
          <div class="mensagem-privada">(09:22:48)  <strong>João</strong> reservadamente para <strong>Maria</strong>:  Oi gatinha quer tc?</div>
-         <div class="mensagem-ações">(09:21:45)  <strong>Maria</strong>  saiu da sala...</div>
+         <div class="mensagem-ações">(09:21:45)  <strong>Maria</strong>  saiu da sala...</div> -->
      </div>
 
-     <div class="fundo escondido">
+     <div class="fundo escondido" onclick="voltaTelaInicial(this)">
         <div class="participantes-ativos">
             <div class="topo-sidebar">Escolha um contato<br>para enviar mensagem:</div>
             <div class="contato">
-                <ion-icon name="people" class="ion-icon-sidebar"></ion-icon>
+                <ion-icon name="people" class="ion-icon-sidebar" onclick="selecionaParaTodos()"></ion-icon>
                 <span>Todos</span>
             </div>
             <div class="contato">
@@ -61,8 +61,8 @@
      </div>
 
      <div class="base">
-         <div class="base1"><input class="inputbase" type="text" id="placeholder-text-base" placeholder = "Escreva aqui..."><ion-icon name="paper-plane-outline" class="paper-plane-outline"></ion-icon></div>
-         <div class="base2 escondido">Enviando para Maria (reservadamente)</div>                 
+        <div class="base1"><input class="inputbase" type="text" id="placeholder-text-base" placeholder = "Escreva aqui..."><ion-icon name="paper-plane-outline" onclick="enviaMensagem()" class="paper-plane-outline"></ion-icon></div>
+        <div class="base2">Enviando para Maria (reservadamente)</div>                 
      </div>
     
 
@@ -82,8 +82,8 @@
 
 
 
-
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="scripts.js"></script>    
     </body>
 </html>
