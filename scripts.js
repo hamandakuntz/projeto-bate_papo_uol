@@ -1,5 +1,6 @@
 let usuario = null;
-let para = null;
+let paraQuem = "Todos";
+const divBatePapo = document.querySelector(".bate-papo");
 
 function aoEntrar () {
     usuario = prompt("Qual é o seu nome?") 
@@ -29,34 +30,42 @@ function enviaMensagem () {
     
     const mensagem = {
         from: usuario,
-        to: para,
+        to: paraQuem,
         text: textoDigitado,
         type: "message"
     }
     
-    const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", mensagem)
-    requisicao.then(renderizaMensagens)
-    requisicao.catch(trataErroMensagem)
-    
+    texto.value = "";
+    const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", mensagem);
+    requisicao.then(buscaMensagens); 
+    requisicao.catch(trataErroMensagem);   
 }
 
 function selecionaParaTodos() {
-    para = "Todos"
+    paraQuem = "Todos";
 }
 
-function trataErroMensagem () {    
-    alert("erro")
+function selecionaMensagemPrivada() {
+
 }
 
+function atualizaUsuarios() {
+    
+}
 
-function buscaMensagens () {
+function trataErroMensagem () {     
+    alert("Você ficou muito tempo ausente, digite seu nome novamente!")  
+    aoEntrar();
+}
+
+function buscaMensagens () {    
     const promessa = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages");
     promessa.then(percorreDados);    
 }
 
 function percorreDados (resposta){
-    const dados = resposta.data;
-    console.log(dados)
+    const dados = resposta.data;   
+    divBatePapo.innerHTML = "";
     for (let i = 0; i < dados.length; i++ ){
         const posicao = i;
         renderizaMensagens(dados, posicao)
@@ -64,42 +73,53 @@ function percorreDados (resposta){
 }
 
 function renderizaMensagens(dados, posicao) {
-
+    
     const divBatePapo = document.querySelector(".bate-papo");
-    usuario = dados[posicao].from;
-    para = dados[posicao].to;
+    const usuarioNome = dados[posicao].from;
+    const para = dados[posicao].to;
     const texto = dados[posicao].text;    
     const tipo = dados[posicao].type;
-    const horario = dados[posicao].time;
+    const horario = dados[posicao].time;   
+
 
     if (para === "Todos" && tipo === "status") {
         divBatePapo.innerHTML += `<div class="mensagem-ações">(${horario})
-        <strong>${usuario}</strong> para ${para}:  ${texto}</div>`
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
         
 
     } else if (para === "Todos" && tipo === "message") {
         divBatePapo.innerHTML += `<div class="mensagem-publica">(${horario})
-        <strong>${usuario}</strong> para ${para}:  ${texto}</div>`
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
         
         
     } else if (para === "Todos" && tipo === "private_message") {
         divBatePapo.innerHTML += `<div class="mensagem-privada">(${horario})
-        <strong>${usuario}</strong> para ${para}:  ${texto}</div>`
-    }
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
+    } 
     
-  
+    document.body.scrollTop = document.body.scrollHeight;
+    document.documentElement.scrollTop = document.documentElement.scrollHeight;  
 }
 
 function exibeUsuários() {
- const fundo = document.querySelector(".fundo")
- fundo.classList.remove("escondido")
+    const fundo = document.querySelector(".fundo");
+    fundo.classList.remove("escondido");
 }
 
 function voltaTelaInicial(tela) {
-    tela.classList.add("escondido")
+    tela.classList.add("escondido");
+}
+
+function mantemOnline() {    
+    const dados = {
+        name: usuario
+    }    
+    const requisicaoOn = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status", dados);
+    requisicaoOn.then(buscaMensagens);
+    requisicaoOn.catch(aoEntrar);
 }
 
 aoEntrar ()
-
-// setInterval(renderizaMensagens, 3000)
+setInterval(buscaMensagens, 3000);
+setInterval(mantemOnline, 5000);
 
