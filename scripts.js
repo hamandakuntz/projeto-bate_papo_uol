@@ -179,7 +179,8 @@ function exibeUsuarios() {
     side.classList.remove("escondido")    
 }
 
-function voltaTelaInicial(tela) {
+function voltaTelaInicial() {
+    const tela = document.querySelector(".fundo")
     tela.classList.add("escondido");  
     const side = document.querySelector(".sidebar");
     side.classList.add("escondido");   

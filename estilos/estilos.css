@@ -62,6 +62,7 @@ button {
 }
 
 .icones {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,6 +92,8 @@ img {
     font-size: 14px;
     margin-bottom: 80px;
     margin-top: 80px;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .mensagem-ações {
