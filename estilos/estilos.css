@@ -201,7 +201,7 @@ img {
 }
 
 .sidebar {
-    width: 70%;
+    width: 250px;
     height: 100%;
     background-color: #FFFFFF;    
     position: fixed;
