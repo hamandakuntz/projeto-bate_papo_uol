@@ -4,23 +4,49 @@ const divBatePapo = document.querySelector(".bate-papo");
 let visibilidade = "message";
 
 function aoEntrar () {
-    usuario = prompt("Qual é o seu nome?") 
-    validaçãoUsuario(usuario)  
+    const escondeTopo = document.querySelector(".topo");
+    escondeTopo.classList.add("escondido");
+    const escondeBatePapo = document.querySelector(".bate-papo");
+    escondeBatePapo.classList.add("escondido");
+    const escondeCaixaDeMensagem = document.querySelector(".base");
+    escondeCaixaDeMensagem.classList.add("escondido");
+    const telaInicial = document.querySelector(".entrada");
+    telaInicial.classList.remove("escondido")     
 }
 
-function validaçãoUsuario (usuario) {
+function entraNoChat () {                
+    const nome = document.querySelector(".inputentrada");
+    const nomeDigitado = nome.value;
+    usuario = nomeDigitado;     
+    const entrada = document.querySelector(".entrada2");  
+    entrada.innerHTML = `<img src="imagens/loading2.gif" alt="loading" class="loading">` 
+    setTimeout(validaçãoUsuario, 2000, usuario)    
+}
+
+function validaçãoUsuario (usuario) { 
+    const escondeTopo = document.querySelector(".topo");
+    escondeTopo.classList.remove("escondido");
+    const escondeBatePapo = document.querySelector(".bate-papo");
+    escondeBatePapo.classList.remove("escondido");
+    const escondeCaixaDeMensagem = document.querySelector(".base");
+    escondeCaixaDeMensagem.classList.remove("escondido");
+    const telaInicial = document.querySelector(".entrada");
+    telaInicial.classList.add("escondido")     
     const dados = {
         name: usuario
-    }
-    const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants", dados)
-    requisicao.then(buscaMensagens)  
-    requisicao.catch(trataErroLogin)
+    }    
+
+    const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants", dados)     
+    requisicao.then(buscaMensagens) 
+    requisicao.then(atualiza) 
+    requisicao.catch(trataErroLogin)       
 }
 
 function trataErroLogin (erro){
     const statusCode = erro.response.status
     if (statusCode === 400) { 
-        alert("Digite outro nome, o que você escolheu já está em uso!")    
+        alert("Digite outro nome, o que você escolheu já está em uso!")  
+        window.location.reload()  
         aoEntrar()
     }    
 }
@@ -118,10 +144,11 @@ function renderizaUsuarios(dadosUsuarios, posicao){
 
 function trataErroMensagem () {     
     alert("Você ficou muito tempo ausente, digite seu nome novamente!")  
+    window.location.reload();
     aoEntrar();
 }
 
-function buscaMensagens () {    
+function buscaMensagens () {       
     const promessa = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages");
     promessa.then(percorreDados);    
 }
@@ -167,7 +194,7 @@ function renderizaMensagens(dados, posicao) {
         divBatePapo.innerHTML += `<div class="mensagem-publica">(${horario})
         <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
     }
-    
+         
     document.body.scrollTop = document.body.scrollHeight;
     document.documentElement.scrollTop = document.documentElement.scrollHeight;  
 }
@@ -192,7 +219,12 @@ function mantemOnline() {
     }    
     const requisicaoOn = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/status", dados);
     requisicaoOn.then(buscaMensagens);
-    requisicaoOn.catch(aoEntrar);
+    requisicaoOn.catch(reloga);    
+}
+
+function reloga(){
+    window.location.reload()  
+    validaçãoUsuario()
 }
 
 function alteraDivEnviandoPara(){    
@@ -209,10 +241,11 @@ function alteraDivEnviandoPara(){
      }    
 }
 
-
+function atualiza (){
+    setInterval(mantemOnline, 5000); 
+    setInterval(buscaMensagens, 3000);
+    setInterval(buscaUsuarios, 10000);
+}
 
 aoEntrar ()
 enviaComEnter()
-setInterval(buscaMensagens, 3000);
-setInterval(mantemOnline, 5000);
-setInterval(buscaUsuarios, 10000);
