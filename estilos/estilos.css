@@ -131,6 +131,7 @@ img {
     height: 80px;
     margin-bottom: 0px;
     margin-top: 20px;
+    z-index: 10;
 }
 
 .base1 {
@@ -174,6 +175,7 @@ img {
     font-style: italic;    
     color: black;
     font-weight: 400;
+    padding-left: 2px;
 }
 
 .escondido {
@@ -188,10 +190,12 @@ img {
     right: 0;
     top: 0;   
     z-index: 5;
+    transition: opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+    transform: translate3d(0, 0, 0);
 }
 
 .participantes-ativos {
-    height: 500px;      
+    height: 400px;      
     overflow-y : scroll;
     word-break: break-all;
     width: 300px;

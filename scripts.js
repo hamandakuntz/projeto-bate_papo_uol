@@ -35,19 +35,25 @@ function enviaMensagem () {
         text: textoDigitado,
         type: visibilidade
     }  
-    
+     
     texto.value = "";
     const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", mensagem);
     requisicao.then(buscaMensagens); 
-    requisicao.catch(trataErroMensagem);   
+    requisicao.catch(trataErroMensagem);       
 }
 
 function selecionaParaTodos() {
     paraQuem = "Todos";
 }
 
-function selecionaMensagemFocada (check, usuario) {     
+function selecionaMensagemFocada (check, usuario) { 
+    const primeiroSelecionado = document.querySelector(".contato.selecionado")      
+    if(primeiroSelecionado !== null){
+        primeiroSelecionado.classList.toggle('selecionado')
+    } 
+    check.classList.add('selecionado') 
     paraQuem = usuario;     
+    alteraDivEnviandoPara()
 }
 
 function mostraSidebar() {
@@ -68,6 +74,15 @@ function selecionaVisibilidade(elemento, tipoMensagem){
     alteraDivEnviandoPara()
 }
 
+function enviaComEnter(){
+    const inputEle = document.getElementById('placeholder-text-base');
+    inputEle.addEventListener('keyup', function(e){
+      var key = e.which || e.keyCode;
+      if (key == 13) { 
+        enviaMensagem()       
+      }
+    });    
+}
 
 function buscaUsuarios() {   
     const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants");
@@ -80,7 +95,8 @@ function percorreUsuarios(resposta) {
     divContatos.innerHTML = `<div class="contato" onclick="selecionaMensagemFocada(this, 'Todos')">
     <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
     <span>Todos</span>
-    </div>    
+    <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon>  
+    </div>  
     `;
 
     for (let i = 0; i < dadosUsuarios.length; i++ ){
@@ -93,8 +109,9 @@ function renderizaUsuarios(dadosUsuarios, posicao){
     const divContatos = document.querySelector(".participantes-ativos");
     const usuario = dadosUsuarios[posicao].name;    
     divContatos.innerHTML += `<div class="contato" onclick="selecionaMensagemFocada(this, '${usuario}')">
-    <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
+    <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>    
     <span>${usuario}</span>
+    <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon>
     </div>    
     `    
 }
@@ -194,6 +211,7 @@ function alteraDivEnviandoPara(){
 
 
 aoEntrar ()
+enviaComEnter()
 setInterval(buscaMensagens, 3000);
 setInterval(mantemOnline, 5000);
 setInterval(buscaUsuarios, 10000);
