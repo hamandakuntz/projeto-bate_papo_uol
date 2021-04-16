@@ -1,6 +1,7 @@
 let usuario = null;
 let paraQuem = "Todos";
 const divBatePapo = document.querySelector(".bate-papo");
+let visibilidade = "message";
 
 function aoEntrar () {
     usuario = prompt("Qual é o seu nome?") 
@@ -32,8 +33,8 @@ function enviaMensagem () {
         from: usuario,
         to: paraQuem,
         text: textoDigitado,
-        type: "message"
-    }
+        type: visibilidade
+    }  
     
     texto.value = "";
     const requisicao = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/messages", mensagem);
@@ -45,12 +46,57 @@ function selecionaParaTodos() {
     paraQuem = "Todos";
 }
 
-function selecionaMensagemPrivada() {
-
+function selecionaMensagemFocada (check, usuario) {     
+    paraQuem = usuario;     
 }
 
-function atualizaUsuarios() {
-    
+function mostraSidebar() {
+    const fundo = document.querySelector(".fundo")
+    fundo.classList.remove("escondido")
+    exibeUsuarios()
+    buscaUsuarios();     
+}
+
+function selecionaVisibilidade(elemento, tipoMensagem){ 
+    const primeiroSelecionado = document.querySelector('.visibilidade.selecionado')
+    console.log(primeiroSelecionado)
+    if(primeiroSelecionado !== null){
+        primeiroSelecionado.classList.remove('selecionado')
+    }   
+    elemento.classList.add('selecionado')
+    visibilidade = tipoMensagem;
+    alteraDivEnviandoPara()
+}
+
+
+function buscaUsuarios() {   
+    const requisicao = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/uol/participants");
+    requisicao.then(percorreUsuarios); 
+}
+
+function percorreUsuarios(resposta) {
+    const dadosUsuarios = resposta.data;   
+    const divContatos = document.querySelector(".participantes-ativos");
+    divContatos.innerHTML = `<div class="contato" onclick="selecionaMensagemFocada('Todos')">
+    <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
+    <span>Todos</span>
+    </div>    
+    `;
+
+    for (let i = 0; i < dadosUsuarios.length; i++ ){
+        const posicao = i;
+        renderizaUsuarios(dadosUsuarios, posicao)
+    }
+}
+
+function renderizaUsuarios(dadosUsuarios, posicao){
+    const divContatos = document.querySelector(".participantes-ativos");
+    const usuario = dadosUsuarios[posicao].name;    
+    divContatos.innerHTML += `<div class="contato" onclick="selecionaMensagemFocada(this, '${usuario}')">
+    <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
+    <span>${usuario}</span>
+    </div>    
+    `    
 }
 
 function trataErroMensagem () {     
@@ -95,19 +141,27 @@ function renderizaMensagens(dados, posicao) {
     } else if (para === "Todos" && tipo === "private_message") {
         divBatePapo.innerHTML += `<div class="mensagem-privada">(${horario})
         <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
-    } 
+
+    } else if (usuarioNome === usuario && tipo === "private_message") {
+        divBatePapo.innerHTML += `<div class="mensagem-privada">(${horario})
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
+        
+    } else if (usuarioNome === usuario && tipo === "message") {
+        divBatePapo.innerHTML += `<div class="mensagem-publica">(${horario})
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
+    }
     
     document.body.scrollTop = document.body.scrollHeight;
     document.documentElement.scrollTop = document.documentElement.scrollHeight;  
 }
 
-function exibeUsuários() {
+function exibeUsuarios() {
     const fundo = document.querySelector(".fundo");
-    fundo.classList.remove("escondido");
+    fundo.classList.remove("escondido");    
 }
 
 function voltaTelaInicial(tela) {
-    tela.classList.add("escondido");
+    tela.classList.add("escondido");    
 }
 
 function mantemOnline() {    
@@ -119,7 +173,23 @@ function mantemOnline() {
     requisicaoOn.catch(aoEntrar);
 }
 
+function alteraDivEnviandoPara(){    
+    const divEnviandoPara = document.querySelector(".base2")
+    divEnviandoPara.innerHTML = "";
+    let recebeVisibilidade = visibilidade;
+  
+    if (recebeVisibilidade === "message") { 
+         recebeVisibilidade = "mensagem pública"        
+         divEnviandoPara.innerHTML = `Enviando para ${paraQuem} (${recebeVisibilidade})`
+     } else if (recebeVisibilidade === "private_message") {
+        recebeVisibilidade = "mensagem privada"
+        divEnviandoPara.innerHTML = `Enviando para ${paraQuem} (${recebeVisibilidade})`    
+     }    
+}
+
+
+
 aoEntrar ()
 setInterval(buscaMensagens, 3000);
 setInterval(mantemOnline, 5000);
-
+setInterval(buscaUsuarios, 10000);

@@ -22,60 +22,38 @@
      <div class="topo">
          <div class="icones">
          <img src="imagens/logo.png" alt="logo-uol">
-         <ion-icon name="people" onclick="exibeUsuários()"></ion-icon>
+         <ion-icon name="people" onclick="mostraSidebar()"></ion-icon>
         </div>
      </div>   
     
      <div class="bate-papo">         
      </div>
 
-     <div class="fundo escondido" onclick="voltaTelaInicial(this)">
-        <div class="participantes-ativos">
+     <div class="fundo escondido" onclick="voltaTelaInicial(this)">    
+        <div class="sidebar">
             <div class="topo-sidebar">Escolha um contato<br>para enviar mensagem:</div>
-            <div class="contato">
-                <ion-icon name="people" class="ion-icon-sidebar" onclick="selecionaParaTodos()"></ion-icon>
-                <span>Todos</span>
+            <div class="contato">               
             </div>
             <div class="contato">
-                <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
-                <span>João</span>
-                <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon>                
-            </div>
-            <div class="contato"><ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
-                <span>Maria</span>
-            </div>
+                <div class="participantes-ativos"></div>              
+            </div>            
             <div class="meio-sidebar">Escolha a visibilidade:</div>
-            <div class="visibilidade"><ion-icon name="lock-open" class="ion-icon-sidebar"></ion-icon>
+            <div class="visibilidade" onclick="selecionaVisibilidade(this, 'message')"><ion-icon name="lock-open" class="ion-icon-sidebar"></ion-icon>
                 <span>Público</span>
+                <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon>
             </div>
-            <div class="visibilidade"><ion-icon name="lock-closed" class="ion-icon-sidebar"></ion-icon>
+            <div class="visibilidade" onclick="selecionaVisibilidade(this, 'private_message')"><ion-icon name="lock-closed" class="ion-icon-sidebar"></ion-icon>
                 <span>Reservadamente</span>
-                <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon> 
+                <ion-icon name="checkmark-sharp" class="ion-icon-sidebar-check"></ion-icon>                 
             </div>
         </div>
-     </div>
+    </div>
+     
 
      <div class="base">
         <div class="base1"><input class="inputbase" type="text" id="placeholder-text-base" placeholder = "Escreva aqui..."><ion-icon name="paper-plane-outline" onclick="enviaMensagem()" class="paper-plane-outline"></ion-icon></div>
-        <div class="base2">Enviando para Maria (reservadamente)</div>                 
+        <div class="base2">Enviando para Todos (mensagem pública)</div>                 
      </div>
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>    
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
