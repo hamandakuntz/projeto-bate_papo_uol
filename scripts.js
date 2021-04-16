@@ -77,7 +77,7 @@ function buscaUsuarios() {
 function percorreUsuarios(resposta) {
     const dadosUsuarios = resposta.data;   
     const divContatos = document.querySelector(".participantes-ativos");
-    divContatos.innerHTML = `<div class="contato" onclick="selecionaMensagemFocada('Todos')">
+    divContatos.innerHTML = `<div class="contato" onclick="selecionaMensagemFocada(this, 'Todos')">
     <ion-icon name="person-circle" class="ion-icon-sidebar"></ion-icon>
     <span>Todos</span>
     </div>    
@@ -157,11 +157,15 @@ function renderizaMensagens(dados, posicao) {
 
 function exibeUsuarios() {
     const fundo = document.querySelector(".fundo");
-    fundo.classList.remove("escondido");    
+    fundo.classList.remove("escondido");
+    const side = document.querySelector(".sidebar");
+    side.classList.remove("escondido")    
 }
 
 function voltaTelaInicial(tela) {
-    tela.classList.add("escondido");    
+    tela.classList.add("escondido");  
+    const side = document.querySelector(".sidebar");
+    side.classList.add("escondido");   
 }
 
 function mantemOnline() {    
