@@ -193,6 +193,10 @@ function renderizaMensagens(dados, posicao) {
     } else if (usuarioNome === usuario && tipo === "message") {
         divBatePapo.innerHTML += `<div class="mensagem-publica">(${horario})
         <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
+
+    } else if (para === usuario && tipo === "private_message"){
+        divBatePapo.innerHTML += `<div class="mensagem-privada">(${horario})
+        <strong>${usuarioNome}</strong> para ${para}:  ${texto}</div>`
     }
          
     document.body.scrollTop = document.body.scrollHeight;

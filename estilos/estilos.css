@@ -201,7 +201,7 @@ img {
 }
 
 .sidebar {
-    width: 259px;
+    width: 70%;
     height: 100%;
     background-color: #FFFFFF;    
     position: fixed;
@@ -212,7 +212,7 @@ img {
 }
 
 .participantes-ativos {
-    height: 400px;      
+    height: 200px;      
     overflow-y : scroll;
     word-break: break-all;
     width: 300px;
